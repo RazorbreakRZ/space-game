@@ -1,0 +1,10 @@
+Para escalar los sprites de los aviones según la resolución de pantalla usar esta función:
+
+//Codigo C#: f(x)=0.45*x-63, donde x es la altura de la ventana entre 2
+iHspt = 0.45f*(iHscr/2) - 63;
+iWspt = iWospt*(iHspt/180);
+
+iHspt: altura sprite escalado
+iWspt: anchura sprite escalado
+iWospt: anchura sprite original
+iHscr: altura de la ventana (en fullscreen coincide con la resolución vertical)
