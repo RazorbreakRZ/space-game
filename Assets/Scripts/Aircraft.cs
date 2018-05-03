@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Aircraft : MonoBehaviour {
 
-    float engineForce = 10f;
-    float rotationForce = -100f;
-    float driftFactor = 1f;
+    float engineForce = 3f;
+    float rotationForce = -150f;
+    float driftFactor = 0f;
 
     // Use this for initialization
     void Start () {
@@ -21,11 +21,12 @@ public class Aircraft : MonoBehaviour {
     private void FixedUpdate()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-
         rb.velocity = ForwardVelocity() + RightVelocity() * driftFactor;
-        if (Input.GetButton("Acceleration"))
-            rb.AddForce(transform.up * engineForce);
+        //if (Input.GetButton("Acceleration"))
+        rb.AddForce(transform.up * engineForce);
         rb.angularVelocity = Input.GetAxis("Rotation") * rotationForce;
+        Debug.Log(rb.velocity.normalized);
+        Debug.Log(rb.angularVelocity);
     }
 
     Vector2 ForwardVelocity()
