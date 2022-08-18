@@ -1,0 +1,19 @@
+{
+    "controls": {
+        "FIRE": 102,
+        "HELP": 1073741882,
+        "QUIT": 27,
+        "SPAN": 3,
+        "TURN_LEFT": 1073741904,
+        "TURN_RIGHT": 1073741903
+    },
+    "screen": {
+        "device": 0,
+        "fps": 30,
+        "fullscreen": true,
+        "resolution": [
+            0,
+            0
+        ]
+    }
+}
