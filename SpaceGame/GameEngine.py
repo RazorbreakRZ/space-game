@@ -13,6 +13,7 @@ class GameEngine:
             pygame.display.toggle_fullscreen()
         self.clock = pygame.time.Clock()
         self.isRunning = True
+        self.allSprites = {}
 
     def __getDefaultConfig(self):
         defaultConfig = {
@@ -37,13 +38,16 @@ class GameEngine:
         return self.config
 
     def __load(self):
+        GameObject.preloadResources()
         self.allSprites = { 
-            "dummy": pygame.sprite.Group(),
+            "background": pygame.sprite.Group(),
             "player": pygame.sprite.Group(),
+            "enemies": pygame.sprite.Group(),
             "hud": pygame.sprite.Group()
         }
-        self.allSprites["dummy"].add(GameObject.GreenBox())
+        self.allSprites["background"].add(GameObject.Grid())
         self.allSprites["player"].add(GameObject.Player())
+        self.allSprites["enemies"].add(GameObject.GreenBox())
         self.allSprites["hud"].add(GameObject.Mouse())
     
     def loop(self):
@@ -60,9 +64,6 @@ class GameEngine:
             # print(event)
             if (event.type == pygame.QUIT) or (event.type == pygame.KEYUP and event.key == self.config["controls"]["QUIT"]):
                 self.__callback_exit(event)
-            
-            if (event.type == pygame.MOUSEBUTTONUP) and (event.button == self.config["controls"]["SPAN"]):
-                pos = pygame.mouse.get_pos()
                 
     def __update(self):
         for group in self.allSprites:
