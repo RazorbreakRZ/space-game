@@ -27,6 +27,20 @@ def preloadResources():
             RESOURCES[resource]["sprites"][sprite]["rect"] = rect
             RESOURCES[resource]["sprites"][sprite]["surface"] = image
 
+class Text(pygame.sprite.Sprite):
+    def __init__(self, text="Hello, world!", color=(255,255,255), size=16, location=(0,0)):
+        super().__init__()
+        self.text = text
+        self.size = size
+        self.color = color
+        self.font = pygame.font.Font(None, self.size)
+        self.image = self.font.render(self.text, True, self.color)
+        self.rect = self.image.get_rect()
+        self.rect.center = location
+
+    def update(self, **kwargs):
+        self.image = self.font.render(self.text, True, self.color)
+        self.rect = self.image.get_rect()
 
 class Mouse(pygame.sprite.Sprite):
     def __init__(self):
@@ -39,12 +53,18 @@ class Mouse(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         pygame.mouse.set_visible(False)
         print("Mouse created!")
+        self.group = pygame.sprite.Group()
+        self.group.add(Text("I'm the mouse!"))
 
-    def update(self):
+    def update(self, **kwargs):
         pos = pygame.mouse.get_pos()
         self.rect.x = pos[0] - self.size/2
         self.rect.y = pos[1] - self.size/2
 
+    def draw(self, surface: pygame.Surface):
+        print("Hey!")
+        return [self.image.get_rect()]
+        
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -53,13 +73,13 @@ class Player(pygame.sprite.Sprite):
         self.image = self.image_original.copy()
         self.rect = self.image.get_rect()
         self.rect.center = (pygame.display.get_window_size()[0]/2,pygame.display.get_window_size()[1]/2)
-        print("Player created!")
         self.last_update = pygame.time.get_ticks()
+        print("Player created!")
 
-    def update(self):
+    def update(self, **kwargs):
         pos = pygame.mouse.get_pos()
         angle = math.degrees(math.atan2(pos[1]-self.rect.centery, pos[0]-self.rect.centerx))
-        print(pos,angle)
+        # print(pos,angle)
         # self.rotate(angle)
 
     def rotate(self, angle):
@@ -99,7 +119,7 @@ class GreenBox(pygame.sprite.Sprite):
         print("GreenBox created!")
         self.dir = (random.randint(-10,10),random.randint(-10,10))
 
-    def update(self):
+    def update(self, **kwargs):
         if self.rect.centerx < 0:
             self.rect.x = pygame.display.get_window_size()[0] - self.size/2
             self.dir = (random.randint(-20,20),random.randint(-20,20))

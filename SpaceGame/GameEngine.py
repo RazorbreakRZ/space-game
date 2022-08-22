@@ -5,6 +5,7 @@ import GameObject
 class GameEngine:
     def __init__(self, config):
         pygame.init()
+        pygame.font.init()
         self.config = merge(self.__getDefaultConfig(), config)
         # print(self.config)
         pygame.display.set_caption("Space Game v1.0.0")
